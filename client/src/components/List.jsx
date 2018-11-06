@@ -27,7 +27,7 @@ class AccordionButton extends Component {
     SubButtons = (sites) => {
         return (
             sites.map(site => (
-                <button className={styles.accordion} onClick={this.props.onClickSubitem} id={site.id}>
+                <button className={styles.accordion} onClick={() => this.props.onClickSubitem(site.id)}>
                     {site.name}
                 </button>
             ))
