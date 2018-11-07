@@ -6,7 +6,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const ENV = process.env.NODE_ENV || 'development';
 
-const db = {}; /* Will need to require('./db') if you want to do the API & Database feature. */
+//const db = {}; /* Will need to require('./db') if you want to do the API & Database feature. */
+const db = require('./db');
 
 ['projects', 'sites', 'trees'].forEach(router => {
   app.use(`/api/${router}`, require(`./routes/${router}`)(db));
