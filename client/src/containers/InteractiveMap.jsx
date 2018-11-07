@@ -23,6 +23,7 @@ class InteractiveMap extends Component {
       <Map { ...this.props }>
         <Sources>
           <GeoJSON id="bounding-box" data={ boundingFeature } />
+            <GeoJSON id="transparent-layer" data={ boundingFeature } />
         </Sources>
         <Layer
           id="bounding-box"
@@ -33,6 +34,15 @@ class InteractiveMap extends Component {
           }}
           source="bounding-box"
         />
+          <Layer
+              id="transparent-layer"
+              type="fill"
+              paint={{
+                  'fill-color': '#fff',
+                  'fill-opacity': 0.2,
+              }}
+              source="transparent-layer"
+          />
       </Map>
     );
   }

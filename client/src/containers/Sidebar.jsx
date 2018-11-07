@@ -32,19 +32,20 @@ class Sidebar extends Component {
       ]
     */
 
-      const items = this.props.projects.map(project => (
-          {
-              "id": project.id,
-              "name": project.name,
-              "items": this.props.sites.filter(site => project.sites.includes(site.id))
-                  .map(item => (
-                      {
-                          "id": item.id,
-                          "name": item.name
-                      }
-                  ))
-          }
-      ));
+  const items = this.props.projects.map(project => (
+      {
+      "id": project.id,
+      "name": project.name,
+      "items": this.props.sites
+          .filter(site => project.sites.includes(site.id))
+          .map(item => (
+              {
+                  "id": item.id,
+                  "name": item.name
+              }
+          ))
+      }
+  ));
 
     return <List items={ items } onClickSubitem={ this.props.centerMapOnSite } />
   }

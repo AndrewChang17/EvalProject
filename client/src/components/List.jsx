@@ -5,7 +5,7 @@ import styles from './List.scss';
 export default function List(props) {
   return (
     <div>
-        {props.items.map(item => <AccordionButton item={item} onClickSubitem={props.onClickSubitem}/>)}
+        {props.items.map(item => <AccordionButton item={item} onClickSubitem={props.onClickSubitem} key={item.name}/>)}
     </div>
   );
 }
@@ -27,7 +27,7 @@ class AccordionButton extends Component {
     SubButtons = (sites) => {
         return (
             sites.map(site => (
-                <button className={styles.accordion} onClick={() => this.props.onClickSubitem(site.id)}>
+                <button className={styles.accordion} onClick={() => this.props.onClickSubitem(site.id)} key={site.name}>
                     {site.name}
                 </button>
             ))
