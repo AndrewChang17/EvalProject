@@ -8,7 +8,7 @@ module.exports = (db) => {
     //response.json(projects);
       db(query)
           .then(res => {
-              response.json(Format(res));
+              response.json(FormatProjects(res));
           })
           .catch(err => console.log(err));
   });
@@ -16,23 +16,24 @@ module.exports = (db) => {
   return router;
 };
 
-function Format(data) {
+function FormatProjects(data) {
   let projects = {
-      "byId": {},
-      "ids": []
+      byId: {},
+      ids: []
   };
     data.forEach(p => {
       if (!projects.byId[p.id])
       {
           projects.ids.push(p.id);
           projects.byId[p.id] = {
-              "id": p.id,
-              "name": p.name,
-              "sites": []
+              id: p.id,
+              name: p.name,
+              sites: []
           };
       }
       projects.byId[p.id].sites.push(p.sid);
     });
 
+    console.log(projects);
     return projects;
 }
