@@ -5,7 +5,6 @@ const query = "SELECT s.id, s.name, s.bounding, t.id AS tid FROM sites s, trees 
 
 module.exports = (db) => {
   router.get('/', (request, response, next) => {
-      //response.json(sites);
       db(query)
           .then(res => {
               response.json(FormatSites(res));
@@ -35,6 +34,5 @@ function FormatSites(data) {
         sites.byId[s.id].trees.push(s.tid);
     });
 
-    console.log(sites);
     return sites;
 }

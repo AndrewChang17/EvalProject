@@ -1,16 +1,42 @@
 const router = require('express').Router();
-const trees = require('../db/mock/trees.json');
+//const trees = require('../db/mock/trees.json');
+
+const types = [
+    'CEDAR',
+    'SPRUCE',
+    'PINE',
+    'FIR'
+];
+
+const query = "TABLE trees";
 
 module.exports = (db) => {
-  router.get('/', (request, response, next) => {
-    //response.json(trees);
-      db('TABLE trees')
-          .then(res => {
-              //console.log(res);
-              response.json(res);
-          })
-          .catch(err => console.log(err));
-  });
+    router.get('/', (request, response, next) => {
+        db(query)
+            .then(res => {
+                response.json(FormatTrees(res));
+            })
+            .catch(err => console.log(err));
+    });
 
-  return router;
+    return router;
+};
+
+function FormatTrees(data) {
+    let trees = {
+        byId: {},
+        ids: []
+    };
+    data.forEach(t => {
+        trees.ids.push(t.id);
+        trees.byId[t.id] = {
+            id: t.id,
+            lat: t.lat,
+            long: t.long,
+            height: t.height,
+            site_id: t.site_id,
+            type: types[t.tree_type_id - 1],
+        };
+    });
+    return trees;
 }

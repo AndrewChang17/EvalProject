@@ -5,7 +5,6 @@ const query = "SELECT p.id, p.name, s.id AS sid FROM projects p, sites s WHERE p
 
 module.exports = (db) => {
   router.get('/', (request, response, next) => {
-    //response.json(projects);
       db(query)
           .then(res => {
               response.json(FormatProjects(res));
@@ -34,6 +33,5 @@ function FormatProjects(data) {
       projects.byId[p.id].sites.push(p.sid);
     });
 
-    console.log(projects);
     return projects;
 }
