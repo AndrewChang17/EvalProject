@@ -11,6 +11,7 @@ import { getTrees } from '../model';
 class InteractiveMap extends Component {
   render() {
     const { bounding } = this.props.currentSite;
+    const siteTrees = this.props.siteTrees;
     
     const boundingFeature = turf.polygon([[
       [bounding.left, bounding.top],
@@ -20,11 +21,29 @@ class InteractiveMap extends Component {
       [bounding.left, bounding.top]
     ]], { name: 'Bounding Area' });
 
-    return (
+      const features = siteTrees.map(tree => {
+          let geometry = {
+              "type": "Point",
+              "coordinates": [Number(tree.lat), Number(tree.long)]
+          };
+          return turf.feature(geometry);
+      });
+      const treesFeatures = turf.featureCollection(features);
+      // const printFeatures = () => {
+      //     let featureCol = turf.featureCollection(features);
+      //     console.log(featureCol);
+      //     return featureCol;
+      // };
+      // const treesFeatures = printFeatures();
+
+
+
+      return (
       <Map { ...this.props }>
         <Sources>
           <GeoJSON id="bounding-box" data={ boundingFeature } />
             <GeoJSON id="transparent-layer" data={ boundingFeature } />
+            <GeoJSON id="trees-layer" data={ treesFeatures } />
         </Sources>
         <Layer
           id="bounding-box"
@@ -44,17 +63,44 @@ class InteractiveMap extends Component {
               }}
               source="transparent-layer"
           />
+          <Layer
+              id="trees-layer"
+              type="fill"
+              paint={{
+                  'fill-color': '#fff',
+                  'fill-opacity': 0.2,
+              }}
+              source="trees-layer"
+          />
+          <Layer
+              id="trees-layer"
+              type="circle"
+              paint={{
+                  //'circle-radius': 6,
+                  'circle-radius': {
+                      property: '8HrPedVol',
+                      type: 'exponential',
+                      stops: [
+                          [124, 2],
+                          [34615, 10]
+                      ]
+                  },
+                  'circle-color': '#cc3737'
+              }}
+              source="trees-layer"
+          />
       </Map>
     );
   }
 }
 
 function mapStateToProps(state) {
+    //console.log(state.trees.siteTrees);
   return {
     currentSite: state.sites.byId[state.sites.selected],
     center: state.map.center,
     zoom: state.map.zoom,
-      trees: getTrees(state)
+      siteTrees: state.trees.siteTrees
   };
 }
 
