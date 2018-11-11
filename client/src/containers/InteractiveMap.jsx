@@ -36,6 +36,9 @@ class InteractiveMap extends Component {
       // };
       // const treesFeatures = printFeatures();
 
+      // const p = () => {return siteTrees[0] ? [Number(siteTrees[2].lat), Number(siteTrees[2].long)] : [49.38710261999775, -123.18727286009813]};
+      // const treesFeatures = turf.point(p(), { name: 'Tree Area' });
+
 
 
       return (
@@ -65,26 +68,9 @@ class InteractiveMap extends Component {
           />
           <Layer
               id="trees-layer"
-              type="fill"
-              paint={{
-                  'fill-color': '#fff',
-                  'fill-opacity': 0.2,
-              }}
-              source="trees-layer"
-          />
-          <Layer
-              id="trees-layer"
               type="circle"
               paint={{
-                  //'circle-radius': 6,
-                  'circle-radius': {
-                      property: '8HrPedVol',
-                      type: 'exponential',
-                      stops: [
-                          [124, 2],
-                          [34615, 10]
-                      ]
-                  },
+                  'circle-radius': 6,
                   'circle-color': '#cc3737'
               }}
               source="trees-layer"
