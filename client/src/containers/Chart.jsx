@@ -65,11 +65,8 @@ class Chart extends Component {
           default:
       }
     });
-    console.log(data);
     return data;
   };
-
-
 
   render() {
     const { width, height } = this.state;
@@ -90,8 +87,8 @@ class Chart extends Component {
       const xScale = scaleBand({
           range: [0, xMax],
           domain: data.map(x),
+          padding: 0.3
       });
-      //const barHeight = yMax - yScale(data.map(y));
     
     /* This is a hack to first set the size based on percentage
        then query for the size so the chart can be scaled to the window size.
@@ -115,18 +112,33 @@ class Chart extends Component {
               top={margin.top}
               left={margin.left}
               numTicks={maxAmount}
-              tickFormat={val => Math.round(val)}
-              stroke={'#1b1a1e'}
-              tickTextFill={'#1b1a1e'}
+              tickFormat={val => val.toFixed(0)}
+              hideAxisLine={true}
+              hideTicks={true}
+              tickLabelProps={() => ({ dx: '-0.25em', dy: '0.25em', textAnchor: 'end', fontFamily: 'Arial', fontSize: 10, fill: 'white' })}
           />
           <AxisBottom
               scale={xScale}
               top={yMax + margin.top}
               left={margin.left}
-              stroke={'#1b1a1e'}
-              tickTextFill={'#1b1a1e'}
+              hideAxisLine={true}
+              hideTicks={true}
+              tickLabelProps={() => ({ dy: '0.25em', textAnchor: 'middle', fontFamily: 'Arial', fontSize: 10, fill: 'white' })}
           />
-          {/*{this.barChart}*/}
+          <Group top={margin.top} left={margin.left}>
+              {data.map(d => {
+                  const barHeight = yMax - yScale(y(d));
+                  return (
+                      <Bar key={x(d)}
+                           width={xScale.bandwidth()}
+                           height={barHeight}
+                           x={xScale(x(d))}
+                           y={yMax - barHeight}
+                           fill="rgba(23, 233, 217, .5)"
+                      />
+                  );
+              })}
+          </Group>
       </svg>
     );
   }
@@ -139,5 +151,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Chart);
-
-//export default Chart;
