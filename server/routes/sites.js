@@ -7,7 +7,7 @@ module.exports = (db) => {
   router.get('/', (request, response, next) => {
       db(query)
           .then(res => {
-              response.json(FormatSites(res));
+              response.json(formatSites(res));
           })
           .catch(err => console.log(err));
   });
@@ -15,7 +15,7 @@ module.exports = (db) => {
   return router;
 };
 
-function FormatSites(data) {
+function formatSites(data) {
     let sites = {
         byId: {},
         ids: []

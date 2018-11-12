@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { GradientDarkgreenGreen } from '@vx/gradient';
 import { AxisLeft, AxisBottom } from '@vx/axis';
 import { Group } from '@vx/group';
-import { scaleLinear, scaleBand, scaleOrdinal } from '@vx/scale';
+import { scaleLinear, scaleBand } from '@vx/scale';
 import { Bar } from '@vx/shape';
 import {connect} from "react-redux";
 

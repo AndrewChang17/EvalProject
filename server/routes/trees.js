@@ -14,7 +14,7 @@ module.exports = (db) => {
     router.get('/', (request, response, next) => {
         db(query)
             .then(res => {
-                response.json(FormatTrees(res));
+                response.json(formatTrees(res));
             })
             .catch(err => console.log(err));
     });
@@ -22,7 +22,7 @@ module.exports = (db) => {
     return router;
 };
 
-function FormatTrees(data) {
+function formatTrees(data) {
     let trees = {
         byId: {},
         ids: []

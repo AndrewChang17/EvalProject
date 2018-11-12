@@ -24,7 +24,7 @@ class AccordionButton extends Component {
         });
     };
 
-    SubButtons = (sites) => {
+    subButtons = (sites) => {
         return (
             sites.map(site => (
                 <button className={styles.accordion2} onClick={() => this.props.onClickSubitem(site.id)} key={site.name}>
@@ -42,7 +42,7 @@ class AccordionButton extends Component {
               </button>
 
               <div className={this.state.dropdown ? styles.panel2 : styles.panel}>
-                  {this.SubButtons(this.props.item.items)}
+                  {this.subButtons(this.props.item.items)}
               </div>
           </>
       )
