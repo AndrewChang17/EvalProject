@@ -53,7 +53,7 @@ class InteractiveMap extends Component {
               type="circle"
               paint={{
                   'circle-radius': {
-                      'base': 1.75,
+                      'base': 1.9,
                       'stops': [[12, 2], [22, 180]]
                   },
                   'circle-color': [
