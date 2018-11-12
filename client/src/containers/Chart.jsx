@@ -76,7 +76,7 @@ class Chart extends Component {
       const y = d => d.amount;
       const maxAmount = Math.max(...data.map(y));
 
-      const margin = { top: 30, bottom: 30, left: 50, right: 20 };
+      const margin = { top: 30, bottom: 30, left: 40, right: 10 };
       const xMax = width - margin.left - margin.right;
       const yMax = height - margin.top - margin.bottom;
 

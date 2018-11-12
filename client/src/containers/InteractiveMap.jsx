@@ -6,7 +6,6 @@ import * as turf from '@turf/turf';
 import Map, { Layer, Sources, GeoJSON } from '../components/map';
 
 import { centerMapOnSite, mapSetCenter, mapSetZoom } from '../model/map';
-import { getTrees } from '../model';
 
 class InteractiveMap extends Component {
   render() {
@@ -21,25 +20,7 @@ class InteractiveMap extends Component {
       [bounding.left, bounding.top]
     ]], { name: 'Bounding Area' });
 
-      const features = siteTrees.map(tree => {
-          let geometry = {
-              "type": "Point",
-              "coordinates": [Number(tree.lat), Number(tree.long)]
-          };
-          return turf.feature(geometry);
-      });
-      const treesFeatures = turf.featureCollection(features);
-      // const printFeatures = () => {
-      //     let featureCol = turf.featureCollection(features);
-      //     console.log(featureCol);
-      //     return featureCol;
-      // };
-      // const treesFeatures = printFeatures();
-
-      // const p = () => {return siteTrees[0] ? [Number(siteTrees[2].lat), Number(siteTrees[2].long)] : [49.38710261999775, -123.18727286009813]};
-      // const treesFeatures = turf.point(p(), { name: 'Tree Area' });
-
-
+      const treesFeatures = turf.points(siteTrees.map(tree => [Number(tree.long), Number(tree.lat)]));
 
       return (
       <Map { ...this.props }>
@@ -70,8 +51,11 @@ class InteractiveMap extends Component {
               id="trees-layer"
               type="circle"
               paint={{
-                  'circle-radius': 6,
-                  'circle-color': '#cc3737'
+                  'circle-color': '#fff',
+                  'circle-radius': {
+                      'base': 1.75,
+                      'stops': [[12, 2], [22, 180]]
+                  },
               }}
               source="trees-layer"
           />
